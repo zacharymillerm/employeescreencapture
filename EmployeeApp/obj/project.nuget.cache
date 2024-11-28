@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "xOMRmOymbUiotVLJkaaisy1kJXtinqH6yCFhO4LHM14MCGoQMGWqQ9H4uw+RSaFH6WYDdLrTPJcwfOWPE6/O3A==",
+  "success": true,
+  "projectFilePath": "E:\\WorkSpace\\Tech\\Screen Capture\\EmployeeApp\\EmployeeApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Souleye\\.nuget\\packages\\hardcodet.notifyicon.wpf\\1.0.5\\hardcodet.notifyicon.wpf.1.0.5.nupkg.sha512",
+    "C:\\Users\\Souleye\\.nuget\\packages\\hardcodet.wpf.taskbarnotification\\1.0.5\\hardcodet.wpf.taskbarnotification.1.0.5.nupkg.sha512"
+  ],
+  "logs": []
+}
