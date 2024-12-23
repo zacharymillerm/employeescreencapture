@@ -14,3 +14,6 @@ export const fetchAllEmployeesWithLastScreenshot = () =>
 
 export const cleanOldData = () =>
   axios.delete(`${SERVER_URL}/api/clean-old-data`);
+
+export const login = (username, password) =>
+  axios.post(`${SERVER_URL}/api/login`, {username, password});

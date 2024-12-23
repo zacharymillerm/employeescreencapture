@@ -101,7 +101,7 @@ const Dashboard = () => {
                 <img
                   src={`http://localhost:3337${employee.latestScreenshot.url}`}
                   alt="Latest Screenshot"
-                  className="mt-2 rounded"
+                  className="mt-2 rounded h-48"
                 />
               ) : (
                 <p className="mt-2 text-sm text-red-500">

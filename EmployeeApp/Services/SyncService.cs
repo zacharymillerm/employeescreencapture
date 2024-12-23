@@ -12,13 +12,15 @@ namespace EmployeeApp.Services
 		private readonly HttpClient httpClient;
 		private readonly string serverIp;
 		private readonly string employeeId;
+		private readonly int timeDifference;
 		private readonly string tempFolder;
 
-		public SyncService(string serverIp, string employeeId, string tempFolder)
+		public SyncService(string serverIp, string employeeId, int timeDifference, string tempFolder)
 		{
 			httpClient = new HttpClient();
 			this.serverIp = serverIp;
 			this.employeeId = employeeId;
+			this.timeDifference = timeDifference;
 			this.tempFolder = tempFolder;
 
 			Directory.CreateDirectory(tempFolder);

@@ -28,7 +28,7 @@ const DangerZone = () => {
                 onClick={handleRemoveOldData}
                 className="bg-red-500 text-white px-4 py-2 rounded mt-4"
             >
-                Remain Old Data
+                Remove data older than 2 weeks
             </button>
             {successMessage && (
                 <p className="text-green-500 mt-4">{successMessage}</p>

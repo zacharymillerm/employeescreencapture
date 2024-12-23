@@ -7,6 +7,7 @@ const fetchScreenshotsRoute = require('./api/fetchScreenshots');
 const healthCheckRoute = require('./api/healthCheck');
 const employeesWithScreenshot = require('./api/employees');
 const cleanOldData = require('./api/cleanOldData');
+const login = require('./api/manager');
 
 const app = express();
 const PORT = 3337;
@@ -21,6 +22,7 @@ app.use(express.static('uploads'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
+app.use('/api/login', login);
 app.use('/api/upload', uploadRoute);
 app.use('/api/screenshots', fetchScreenshotsRoute);
 app.use('/api/ping', healthCheckRoute);

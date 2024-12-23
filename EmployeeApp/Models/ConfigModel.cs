@@ -7,5 +7,6 @@ namespace EmployeeApp.Models
 	{
 		public string ServerIp { get; set; }
 		public string EmployeeId { get; set; }
+		public int TimeDifference { get; set; }
 	}
 }

@@ -13,7 +13,11 @@
 			<TextBox Text="{Binding ServerIp}" Width="200" Height="25" Margin="70,0,0,10" Name="serverIPText"/>
 
 			<TextBlock Text="Employee ID:" FontWeight="Bold" Margin="10,0,0,5"/>
-			<TextBox Text="{Binding EmployeeId}" Width="200" Height="25" Margin="70,0,0,30" Name="employeeIdText"/>
+			<TextBox Text="{Binding EmployeeId}" Width="200" Height="25" Margin="70,0,0,0" Name="employeeIdText"/>
+
+			<TextBlock Text="Time Difference:" FontWeight="Bold" Margin="10,0,0,5"/>
+			<Slider Value="{Binding TimeDifference}" Name="timeDifferenceSd" Width="200" Margin="70,0,0,10" Minimum="-12" Maximum="12" SmallChange="1" AutoToolTipPlacement="TopLeft"/>
+			
 			<Button Content="Save and Start" Width="100" Click="SaveButton_Click" Name="startButton"/>
 		</StackPanel>
 	</Grid>
