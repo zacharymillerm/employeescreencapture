@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:EmployeeApp.Views"
         xmlns:vm="clr-namespace:EmployeeApp.ViewModels"
-        Title="Eagle Vision+" Height="250" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/Views/eye-scan.png">
+        Title="Eagle Vision +" Height="230" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/Views/eye-scan.png">
 	<Window.DataContext>
 		<vm:MainWindowViewModel />
 	</Window.DataContext>
@@ -13,12 +13,9 @@
 			<TextBox Text="{Binding ServerIp}" Width="200" Height="25" Margin="70,0,0,10" Name="serverIPText"/>
 
 			<TextBlock Text="Employee ID:" FontWeight="Bold" Margin="10,0,0,5"/>
-			<TextBox Text="{Binding EmployeeId}" Width="200" Height="25" Margin="70,0,0,0" Name="employeeIdText"/>
-
-			<TextBlock Text="Time Difference:" FontWeight="Bold" Margin="10,0,0,5"/>
-			<Slider Value="{Binding TimeDifference}" Name="timeDifferenceSd" Width="200" Margin="70,0,0,10" Minimum="-12" Maximum="12" SmallChange="1" AutoToolTipPlacement="TopLeft"/>
+			<TextBox Text="{Binding EmployeeId}" Width="200" Height="25" Margin="70,0,5,0" Name="employeeIdText"/>
 			
-			<Button Content="Save and Start" Width="100" Click="SaveButton_Click" Name="startButton"/>
+			<Button Content="Save and Start" Width="100" Margin="20" Click="SaveButton_Click" x:Name="startButton"/>
 		</StackPanel>
 	</Grid>
 </Window>

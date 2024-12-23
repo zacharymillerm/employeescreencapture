@@ -16,23 +16,28 @@ const formatDate = (date) => {
 
 const formatFilename = (filePath) => {
   try {
-    const filename = filePath.split("\\").pop().split("/").pop();
-    const nameWithoutExtension = filename.replace(".png", "");
-    const [date, time] = nameWithoutExtension.split("_");
-    const formattedTime = time.replace(/-/g, ":");
-    return `${date} ${formattedTime}`;
-  } catch {
+    // Assuming filePath is in the format: uploads\Eye\2024-12-23_06-57-53.jpg
+    const timePart = filePath.split("_")[1]; // Extract the time part (06-57-53.jpg)
+    
+    // Extract mm:ss
+    const mm_ss = timePart.substring(3, 8); // mm:ss part from "06-57-53"
+    
+    // Extract and convert the hour
+    const hour = (parseInt(timePart.substring(0, 2), 10) - 5 + 24) % 24;
+    const formattedHour = String(hour).padStart(2, '0');
+
+    // Return formatted time in HH:mm:ss
+    return `${formattedHour}:${mm_ss.replace("-", ":")}`; // Replace the first dash with a colon
+  } catch (error) {
+    console.error(error); // Log the error for debugging
     return "Unknown Time";
   }
 };
 
 const getHourFromFilename = (filePath) => {
   try {
-    const filename = filePath.split("\\").pop().split("/").pop();
-    const nameWithoutExtension = filename.replace(".png", "");
-    const [, time] = nameWithoutExtension.split("_");
-    const hour = time.split("-")[0];
-    return parseInt(hour, 10);
+    const hour = filePath.split("_")[1].substring(0, 2);
+    return (parseInt(hour, 10) - 5 + 24) % 24; // EST Time Zone
   } catch {
     return null;
   }
@@ -206,105 +211,118 @@ const EmployeeDetail = () => {
           </div>
 
           {renderError()}
-          <div
-            className={
-              viewMode === "grid"
-                ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-                : "flex flex-col gap-4"
-            }
-          >
-            {displayedScreenshots.map((screenshot, idx) => {
-              const currentScreenshotTime = new Date(
-                formatFilename(screenshot).split(".")[0]
-              );
 
-              const previousScreenshotTime =
-                idx > 0
-                  ? new Date(
-                      formatFilename(displayedScreenshots[idx - 1]).split(
-                        "."
-                      )[0]
-                    )
-                  : null;
+          {displayedScreenshots.length > 0 ? (
+            <div
+              className={
+                viewMode === "grid"
+                  ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+                  : "flex flex-col gap-4"
+              }
+            >
+              {displayedScreenshots.length > 0 ? (
+                displayedScreenshots.map((screenshot, idx) => {
+                  const currentScreenshotTime = new Date(
+                    formatFilename(screenshot).split(".")[0]
+                  );
 
-              const timeGap = previousScreenshotTime
-                ? (currentScreenshotTime - previousScreenshotTime) / 1000
-                : 0;
-
-              const shouldShowGap = timeGap > 35;
-
-              const containerClasses = `border border-dashed border-slate-500 rounded shadow-lg ${
-                viewMode === "list" ? "flex items-center p-4" : "flex flex-col"
-              }`;
-
-              const imageClasses =
-                viewMode === "list"
-                  ? "w-auto h-20 object-cover mr-4"
-                  : "w-full h-40 object-cover";
-
-              const captionClasses =
-                viewMode === "list"
-                  ? "text-sm text-gray-700 font-bold"
-                  : "text-center mt-2 text-sm text-gray-500";
-
-              return (
-                <>
-                  {shouldShowGap && (
-                    <div
-                      key={`gap-${idx}`}
-                      className={
-                        viewMode === "grid"
-                          ? "border border-dashed border-slate-500 rounded shadow-lg"
-                          : containerClasses
-                      }
-                    >
-                      <img
-                        src="/timeoff.jpg"
-                        alt="Time Gap Indicator"
-                        className={imageClasses.replace(
-                          "object-cover",
-                          "object-fill"
-                        )}
-                      />
-                      <div
-                        className={`${captionClasses} text-red-500 font-bold`}
-                      >
-                        Time Gap: {Math.floor(timeGap / 3600)} hrs{" "}
-                        {Math.floor((timeGap % 3600) / 60)} mins {timeGap % 60}{" "}
-                        sec
-                      </div>
-                    </div>
-                  )}
-
-                  <div
-                    key={idx}
-                    className={containerClasses}
-                    onClick={() => {
-                      try {
-                        openImageModal(`${SERVER_URL}/${screenshot}`);
-                      } catch (err) {
-                        setError("Unable to display this screenshot.");
-                      }
-                    }}
-                  >
-                    <img
-                      src={`${SERVER_URL}/${screenshot}`}
-                      alt="Screenshot"
-                      onError={() =>
-                        setError(
-                          `Error loading image: ${screenshot.split("/").pop()}`
+                  const previousScreenshotTime =
+                    idx > 0
+                      ? new Date(
+                          formatFilename(displayedScreenshots[idx - 1]).split(
+                            "."
+                          )[0]
                         )
-                      }
-                      className={imageClasses}
-                    />
-                    <div className={captionClasses}>
-                      {formatFilename(screenshot)}
-                    </div>
-                  </div>
-                </>
-              );
-            })}
-          </div>
+                      : null;
+
+                  const timeGap = previousScreenshotTime
+                    ? (currentScreenshotTime - previousScreenshotTime) / 1000
+                    : 0;
+
+                  const shouldShowGap = timeGap > 35;
+
+                  const containerClasses = `border border-dashed border-slate-500 rounded shadow-lg ${
+                    viewMode === "list"
+                      ? "flex items-center p-4"
+                      : "flex flex-col"
+                  }`;
+
+                  const imageClasses =
+                    viewMode === "list"
+                      ? "w-auto h-20 object-cover mr-4"
+                      : "w-full h-40 object-cover";
+
+                  const captionClasses =
+                    viewMode === "list"
+                      ? "text-sm text-gray-700 font-bold text-lg"
+                      : "text-center mt-2 text-sm text-gray-500 font-bold text-lg";
+
+                  return (
+                    <>
+                      {shouldShowGap && (
+                        <div
+                          key={`gap-${idx}`}
+                          className={
+                            viewMode === "grid"
+                              ? "border border-dashed border-slate-500 rounded shadow-lg"
+                              : containerClasses
+                          }
+                        >
+                          <img
+                            src="/timeoff.jpg"
+                            alt="Time Gap Indicator"
+                            className={imageClasses.replace(
+                              "object-cover",
+                              "object-fill"
+                            )}
+                          />
+                          <div
+                            className={`${captionClasses} text-red-500`}
+                          >
+                            Time Gap: {Math.floor(timeGap / 3600)} hrs{" "}
+                            {Math.floor((timeGap % 3600) / 60)} mins{" "}
+                            {timeGap % 60} sec
+                          </div>
+                        </div>
+                      )}
+
+                      <div
+                        key={idx}
+                        className={containerClasses}
+                        onClick={() => {
+                          try {
+                            openImageModal(`${SERVER_URL}/${screenshot}`);
+                          } catch (err) {
+                            setError("Unable to display this screenshot.");
+                          }
+                        }}
+                      >
+                        <img
+                          src={`${SERVER_URL}/${screenshot}`}
+                          alt="Screenshot"
+                          onError={() =>
+                            setError(
+                              `Error loading image: ${screenshot
+                                .split("/")
+                                .pop()}`
+                            )
+                          }
+                          className={imageClasses}
+                        />
+                        <div className={captionClasses}>
+                          {formatFilename(screenshot)}
+                        </div>
+                      </div>
+                    </>
+                  );
+                })
+              ) : (
+                <p>No Scr</p>
+              )}
+            </div>
+          ) : (
+            <p className="p-8 text-center font-bold">No Screenshot</p>
+          )}
 
           {selectedImage && (
             <Modal imageSrc={selectedImage} onClose={closeModal} />

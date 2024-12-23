@@ -11,7 +11,7 @@ const ActivityGraph = ({ data }) => {
   const labels = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, "0"));
 
   // Map the activity data to match the labels, defaulting to 0 if no data is provided for an hour
-  const activityData = labels.map((hour) => data[hour] || 0);
+  const activityData = labels.map((hour) => data[parseInt(hour, 10)] || 0);
 
   // Define the data and appearance for the chart
   const chartData = {
@@ -34,6 +34,7 @@ const ActivityGraph = ({ data }) => {
     scales: {
       y: {
         beginAtZero: true,
+        max: 120,
         title: {
           display: true,
           text: "Screenshots",

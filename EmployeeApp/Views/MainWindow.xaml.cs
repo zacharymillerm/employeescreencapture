@@ -28,13 +28,12 @@ namespace EmployeeApp.Views
 			{
 				ServerIp = config.ServerIp,
 				EmployeeId = config.EmployeeId,
-				TimeDifference = config.TimeDifference
 			};
 
 			// Initialize tray icon
 			InitializeTrayIcon();
 
-			if (!string.IsNullOrWhiteSpace(config.ServerIp) && !string.IsNullOrWhiteSpace(config.EmployeeId) && config.TimeDifference >= -12 && config.TimeDifference <= 12)
+			if (!string.IsNullOrWhiteSpace(config.ServerIp) && !string.IsNullOrWhiteSpace(config.EmployeeId))
 			{
 				InitializeServices(config);
 				SaveButton_Click(null, null); // Simulate button click
@@ -64,7 +63,7 @@ namespace EmployeeApp.Views
 		{
 			this.config = config;
 			screenshotService = new ScreenshotService();
-			syncService = new SyncService(config.ServerIp, config.EmployeeId, config.TimeDifference, screenshotService.GetTempFolder());
+			syncService = new SyncService(config.ServerIp, config.EmployeeId, screenshotService.GetTempFolder());
 		}
 
 		private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -72,7 +71,6 @@ namespace EmployeeApp.Views
 			var viewModel = DataContext as MainWindowViewModel;
 			config.ServerIp = viewModel.ServerIp.Trim();
 			config.EmployeeId = viewModel.EmployeeId.Trim();
-			config.TimeDifference = viewModel.TimeDifference;
 			ConfigManager.SaveConfig(config);
 
 			InitializeServices(config);
@@ -82,7 +80,6 @@ namespace EmployeeApp.Views
 			employeeIdText.IsEnabled = false;
 			startButton.IsEnabled = false;
 			serverIPText.IsEnabled = false;
-			timeDifferenceSd.IsEnabled = false;
 
 			this.Hide();
 

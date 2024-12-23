@@ -2,5 +2,4 @@
 <Config xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ServerIp>192.168.12.43:3337</ServerIp>
   <EmployeeId>Eye</EmployeeId>
-  <TimeDifference>6</TimeDifference>
 </Config>

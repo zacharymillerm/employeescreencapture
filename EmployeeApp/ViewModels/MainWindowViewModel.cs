@@ -7,7 +7,6 @@ namespace EmployeeApp.ViewModels
 	{
 		private string serverIp;
 		private string employeeId;
-		private int timeDifference;
 
 		public string ServerIp
 		{
@@ -25,16 +24,6 @@ namespace EmployeeApp.ViewModels
 			set
 			{
 				employeeId = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public int TimeDifference
-		{
-			get => timeDifference;
-			set
-			{
-				timeDifference = value;
 				OnPropertyChanged();
 			}
 		}

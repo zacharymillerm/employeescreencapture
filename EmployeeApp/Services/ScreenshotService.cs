@@ -32,7 +32,7 @@ namespace EmployeeApp.Services
 		{
 			Rectangle bounds = GetTotalScreenBounds();
 			string directory = saveDirectory ?? screenshotsFolder;
-			string filePath = Path.Combine(directory, $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.jpg"); // Save in the specified folder
+			string filePath = Path.Combine(directory, $"{DateTime.UtcNow:yyyy-MM-dd_HH-mm-ss}.jpg"); // Save in the specified folder
 
 			using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
 			{
